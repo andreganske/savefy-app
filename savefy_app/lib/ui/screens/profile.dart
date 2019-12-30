@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:savefy_app/generated/i18n.dart';
 import 'package:savefy_app/models/state.dart';
 import 'package:savefy_app/ui/screens/sign_in.dart';
+import 'package:savefy_app/ui/widgets/drawer.dart';
 import 'package:savefy_app/ui/widgets/loading.dart';
 import 'package:savefy_app/util/state_widget.dart';
 
@@ -19,9 +20,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget build(BuildContext context) {
-    appState = StateWidget
-        .of(context)
-        .state;
+
+    appState = StateWidget.of(context).state;
+
     if (!appState.isLoading &&
         (appState.firebaseUserAuth == null ||
             appState.user == null ||
@@ -42,6 +43,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
       return Scaffold(
         backgroundColor: Colors.white,
+        drawer: AppDrawer(),
+        appBar: new AppBar(
+            title: new Text(S.of(context).profile)
+        ),
         body: LoadingScreen(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 48.0),
