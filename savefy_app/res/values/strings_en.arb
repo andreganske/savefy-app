@@ -1,1 +1,17 @@
-{}
+{
+  "app_title": "Savefy App",
+
+  "home": "home",
+  "profile": "profile",
+
+  "sign_up": "sign up",
+  "sign_in": "sign in",
+  "sign_out": "sign out",
+  "forgot_password": "Forgot password",
+
+  "app_id_" : "app id",
+  "email": "email",
+  "first_name": "first name",
+  "last_name": "last name",
+  "setttings_id": "setttings id"
+}

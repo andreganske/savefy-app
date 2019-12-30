@@ -21,6 +21,18 @@ class S implements WidgetsLocalizations {
   @override
   TextDirection get textDirection => TextDirection.ltr;
 
+  String get app_id_ => "app id";
+  String get app_title => "Savefy App";
+  String get email => "email";
+  String get first_name => "first name";
+  String get forgot_password => "Forgot password";
+  String get home => "home";
+  String get last_name => "last name";
+  String get profile => "profile";
+  String get setttings_id => "setttings id";
+  String get sign_in => "sign in";
+  String get sign_out => "sign out";
+  String get sign_up => "sign up";
 }
 
 class $en extends S {
