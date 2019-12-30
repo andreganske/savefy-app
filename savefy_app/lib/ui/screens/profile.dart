@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:savefy_app/generated/i18n.dart';
 import 'package:savefy_app/models/state.dart';
 import 'package:savefy_app/ui/screens/sign_in.dart';
 import 'package:savefy_app/ui/widgets/loading.dart';
@@ -39,12 +40,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       final lastName = appState?.user?.lastName ?? '';
       final settingsId = appState?.settings?.settingsId ?? '';
 
-      final userIdLabel = Text('App Id: ');
-      final emailLabel = Text('Email: ');
-      final firstNameLabel = Text('First Name: ');
-      final lastNameLabel = Text('Last Name: ');
-      final settingsIdLabel = Text('SetttingsId: ');
-
       return Scaffold(
         backgroundColor: Colors.white,
         body: LoadingScreen(
@@ -57,23 +52,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
                       SizedBox(height: 48.0),
-                      userIdLabel,
+                    Text(S.of(context).app_id_),
                       Text(userId,
                           style: TextStyle(fontWeight: FontWeight.bold)),
                       SizedBox(height: 12.0),
-                      emailLabel,
+                    Text(S.of(context).email),
                       Text(email,
                           style: TextStyle(fontWeight: FontWeight.bold)),
                       SizedBox(height: 12.0),
-                      firstNameLabel,
+                      Text(S.of(context).first_name),
                       Text(firstName,
                           style: TextStyle(fontWeight: FontWeight.bold)),
                       SizedBox(height: 12.0),
-                      lastNameLabel,
+                      Text(S.of(context).last_name),
                       Text(lastName,
                           style: TextStyle(fontWeight: FontWeight.bold)),
                       SizedBox(height: 12.0),
-                      settingsIdLabel,
+                      Text(S.of(context).setttings_id),
                       Text(settingsId,
                           style: TextStyle(fontWeight: FontWeight.bold)),
                       SizedBox(height: 12.0),
@@ -101,7 +96,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         },
         padding: EdgeInsets.all(12),
         color: Theme.of(context).primaryColor,
-        child: Text('UPDATE', style: TextStyle(color: Colors.white)),
+        child: Text(S.of(context).update_user_info, style: TextStyle(color: Colors.white)),
       ),
     );
 
@@ -110,7 +105,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   _signOutLabel() {
     return FlatButton(
       child: Text(
-        'Log Out',
+        S.of(context).sign_out,
         style: TextStyle(color: Colors.black54),
       ),
       onPressed: () {

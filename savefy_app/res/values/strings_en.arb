@@ -8,10 +8,11 @@
   "sign_in": "sign in",
   "sign_out": "sign out",
   "forgot_password": "Forgot password",
+  "update_user_info": "Save my info",
 
   "app_id_" : "app id",
   "email": "email",
   "first_name": "first name",
   "last_name": "last name",
-  "setttings_id": "setttings id"
+  "setttings_id": "settings id"
 }

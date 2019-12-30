@@ -29,10 +29,11 @@ class S implements WidgetsLocalizations {
   String get home => "home";
   String get last_name => "last name";
   String get profile => "profile";
-  String get setttings_id => "setttings id";
+  String get setttings_id => "settings id";
   String get sign_in => "sign in";
   String get sign_out => "sign out";
   String get sign_up => "sign up";
+  String get update_user_info => "Save my info";
 }
 
 class $en extends S {
