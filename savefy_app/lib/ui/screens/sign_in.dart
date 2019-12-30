@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/services.dart';
+import 'package:savefy_app/generated/i18n.dart';
 
 import 'package:savefy_app/ui/widgets/loading.dart';
 import 'package:savefy_app/util/auth.dart';
@@ -52,7 +53,7 @@ class _SignInScreenState extends State<SignInScreen> {
             color: Colors.grey,
           ), // icon is 48px widget.
         ), // icon is 48px widget.
-        hintText: 'Email',
+        hintText: S.of(context).email,
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
@@ -71,7 +72,7 @@ class _SignInScreenState extends State<SignInScreen> {
             color: Colors.grey,
           ), // icon is 48px widget.
         ), // icon is 48px widget.
-        hintText: 'Password',
+        hintText: S.of(context).password,
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
@@ -89,13 +90,13 @@ class _SignInScreenState extends State<SignInScreen> {
         },
         padding: EdgeInsets.all(12),
         color: Theme.of(context).primaryColor,
-        child: Text('SIGN IN', style: TextStyle(color: Colors.white)),
+        child: Text(S.of(context).sign_in, style: TextStyle(color: Colors.white)),
       ),
     );
 
     final forgotLabel = FlatButton(
       child: Text(
-        'Forgot password?',
+        S.of(context).forgot_password,
         style: TextStyle(color: Colors.black54),
       ),
       onPressed: () {
@@ -105,7 +106,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
     final signUpLabel = FlatButton(
       child: Text(
-        'Create an Account',
+        S.of(context).create_an_account,
         style: TextStyle(color: Colors.black54),
       ),
       onPressed: () {
@@ -163,10 +164,10 @@ class _SignInScreenState extends State<SignInScreen> {
         await Navigator.pushNamed(context, '/');
       } catch (e) {
         _changeLoadingVisible();
-        print("Sign In Error: $e");
+        print(S.of(context).sign_in_error_e);
         String exception = Auth.getExceptionText(e);
         Flushbar(
-          title: "Sign In Error",
+          title: S.of(context).sign_in_error,
           message: exception,
           duration: Duration(seconds: 5),
         )..show(context);

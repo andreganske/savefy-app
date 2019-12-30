@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/services.dart';
+
+import 'package:savefy_app/generated/i18n.dart';
 import 'package:savefy_app/models/user.dart';
 import 'package:savefy_app/ui/widgets/loading.dart';
 import 'package:savefy_app/util/auth.dart';
 import 'package:savefy_app/util/validator.dart';
-
 
 class SignUpScreen extends StatefulWidget {
   _SignUpScreenState createState() => _SignUpScreenState();
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   final TextEditingController _firstName = new TextEditingController();
   final TextEditingController _lastName = new TextEditingController();
   final TextEditingController _email = new TextEditingController();
@@ -20,6 +23,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   bool _autoValidate = false;
   bool _loadingVisible = false;
+  
   @override
   void initState() {
     super.initState();
@@ -54,7 +58,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             color: Colors.grey,
           ), // icon is 48px widget.
         ), // icon is 48px widget.
-        hintText: 'First Name',
+        hintText: S.of(context).first_name,
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
@@ -73,7 +77,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             color: Colors.grey,
           ), // icon is 48px widget.
         ), // icon is 48px widget.
-        hintText: 'Last Name',
+        hintText: S.of(context).last_name,
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
@@ -92,7 +96,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             color: Colors.grey,
           ), // icon is 48px widget.
         ), // icon is 48px widget.
-        hintText: 'Email',
+        hintText: S.of(context).email,
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
@@ -111,7 +115,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             color: Colors.grey,
           ), // icon is 48px widget.
         ), // icon is 48px widget.
-        hintText: 'Password',
+        hintText: S.of(context).password,
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
@@ -133,13 +137,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
         },
         padding: EdgeInsets.all(12),
         color: Theme.of(context).primaryColor,
-        child: Text('SIGN UP', style: TextStyle(color: Colors.white)),
+        child: Text(S.of(context).sign_up, style: TextStyle(color: Colors.white)),
       ),
     );
 
     final signInLabel = FlatButton(
       child: Text(
-        'Have an Account? Sign In.',
+        S.of(context).have_an_account_sign_in,
         style: TextStyle(color: Colors.black54),
       ),
       onPressed: () {
@@ -213,10 +217,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
         await Navigator.pushNamed(context, '/signin');
       } catch (e) {
         _changeLoadingVisible();
-        print("Sign Up Error: $e");
+        print(S.of(context).sign_up_error_e);
         String exception = Auth.getExceptionText(e);
         Flushbar(
-          title: "Sign Up Error",
+          title: S.of(context).sign_up_error,
           message: exception,
           duration: Duration(seconds: 5),
         )..show(context);
