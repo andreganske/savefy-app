@@ -1,1 +1,31 @@
-{}
+{
+  "app_title": "Savefy App",
+
+  "home": "home",
+  "profile": "profile",
+
+  "sign_up": "sign up",
+  "sign_in": "sign in",
+  "sign_out": "sign out",
+
+  "have_an_account_sign_in": "already have an account? sign in",
+  "create_an_account": "create an account",
+  "forgot_password": "forgot password",
+  "update_user_info": "save my info",
+  "password_reset_email_sent": "password reset email sent",
+  "check_your_email_and_follow_the_instructions_to_reset_your": "Check your email and follow the instructions to reset your password.",
+
+  "app_id_" : "app id",
+  "email": "email",
+  "password": "password",
+  "first_name": "first name",
+  "last_name": "last name",
+  "setttings_id": "settings id",
+
+  "sign_in_error": "sign in error",
+  "sign_in_error_e": "sign in error: $e",
+  "sign_up_error": "sign up error",
+  "sign_up_error_e": "sign up error: $e",
+  "forgot_password_error": "Forgot Password Error",
+  "forgot_password_error_e": "Forgot Password Error: $e"
+}

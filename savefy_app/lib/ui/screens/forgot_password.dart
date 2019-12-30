@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/services.dart';
+import 'package:savefy_app/generated/i18n.dart';
 import 'package:savefy_app/ui/widgets/loading.dart';
 import 'package:savefy_app/util/auth.dart';
 import 'package:savefy_app/util/validator.dart';
@@ -49,7 +50,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             color: Colors.grey,
           ), // icon is 48px widget.
         ), // icon is 48px widget.
-        hintText: 'Email',
+        hintText: S.of(context).email,
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
@@ -66,13 +67,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         },
         padding: EdgeInsets.all(12),
         color: Theme.of(context).primaryColor,
-        child: Text('FORGOT PASSWORD', style: TextStyle(color: Colors.white)),
+        child: Text(S.of(context).forgot_password, style: TextStyle(color: Colors.white)),
       ),
     );
 
     final signInLabel = FlatButton(
       child: Text(
-        'Sign In',
+        S.of(context).sign_in,
         style: TextStyle(color: Colors.black54),
       ),
       onPressed: () {
@@ -124,17 +125,17 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         await Auth.forgotPasswordEmail(email);
         await _changeLoadingVisible();
         Flushbar(
-          title: "Password Reset Email Sent",
+          title: S.of(context).password_reset_email_sent,
           message:
-              'Check your email and follow the instructions to reset your password.',
+              S.of(context).check_your_email_and_follow_the_instructions_to_reset_your,
           duration: Duration(seconds: 20),
         )..show(context);
       } catch (e) {
         _changeLoadingVisible();
-        print("Forgot Password Error: $e");
+        print(S.of(context).forgot_password_error_e);
         String exception = Auth.getExceptionText(e);
         Flushbar(
-          title: "Forgot Password Error",
+          title: S.of(context).forgot_password_error,
           message: exception,
           duration: Duration(seconds: 10),
         )..show(context);

@@ -21,6 +21,30 @@ class S implements WidgetsLocalizations {
   @override
   TextDirection get textDirection => TextDirection.ltr;
 
+  String get app_id_ => "app id";
+  String get app_title => "Savefy App";
+  String get check_your_email_and_follow_the_instructions_to_reset_your => "Check your email and follow the instructions to reset your password.";
+  String get create_an_account => "create an account";
+  String get email => "email";
+  String get first_name => "first name";
+  String get forgot_password => "forgot password";
+  String get forgot_password_error => "Forgot Password Error";
+  String get have_an_account_sign_in => "already have an account? sign in";
+  String get home => "home";
+  String get last_name => "last name";
+  String get password => "password";
+  String get password_reset_email_sent => "password reset email sent";
+  String get profile => "profile";
+  String get setttings_id => "settings id";
+  String get sign_in => "sign in";
+  String get sign_in_error => "sign in error";
+  String get sign_out => "sign out";
+  String get sign_up => "sign up";
+  String get sign_up_error => "sign up error";
+  String get update_user_info => "save my info";
+  String forgot_password_error_e(String e) => "Forgot Password Error: $e";
+  String sign_in_error_e(String e) => "sign in error: $e";
+  String sign_up_error_e(String e) => "sign up error: $e";
 }
 
 class $en extends S {

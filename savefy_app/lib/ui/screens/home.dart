@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:savefy_app/generated/i18n.dart';
 import 'package:savefy_app/models/state.dart';
 import 'package:savefy_app/ui/screens/sign_in.dart';
 import 'package:savefy_app/ui/widgets/loading.dart';
@@ -56,13 +57,15 @@ class _HomeScreenState extends State<HomeScreen> {
           },
           padding: EdgeInsets.all(12),
           color: Theme.of(context).primaryColor,
-          child: Text('SIGN OUT', style: TextStyle(color: Colors.white)),
+          child: Text(S.of(context).sign_out, 
+              style: TextStyle(color: Colors.white)
+          ),
         ),
       );
 
       final forgotLabel = FlatButton(
         child: Text(
-          'Forgot password?',
+          S.of(context).forgot_password,
           style: TextStyle(color: Colors.black54),
         ),
         onPressed: () {
@@ -72,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
       final signUpLabel = FlatButton(
         child: Text(
-          'Sign Up',
+          S.of(context).sign_up,
           style: TextStyle(color: Colors.black54),
         ),
         onPressed: () {
@@ -82,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
       final signInLabel = FlatButton(
         child: Text(
-          'Sign In',
+          S.of(context).sign_in,
           style: TextStyle(color: Colors.black54),
         ),
         onPressed: () {
@@ -92,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
       final profileLabel = FlatButton(
         child: Text(
-          'Profile',
+          S.of(context).profile,
           style: TextStyle(color: Colors.black54),
         ),
         onPressed: () {
@@ -106,11 +109,6 @@ class _HomeScreenState extends State<HomeScreen> {
       final firstName = appState?.user?.firstName ?? '';
       final lastName = appState?.user?.lastName ?? '';
       final settingsId = appState?.settings?.settingsId ?? '';
-      final userIdLabel = Text('App Id: ');
-      final emailLabel = Text('Email: ');
-      final firstNameLabel = Text('First Name: ');
-      final lastNameLabel = Text('Last Name: ');
-      final settingsIdLabel = Text('SetttingsId: ');
 
       return Scaffold(
         backgroundColor: Colors.white,
@@ -125,23 +123,23 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: <Widget>[
                       logo,
                       SizedBox(height: 48.0),
-                      userIdLabel,
+                      Text(S.of(context).app_id_),
                       Text(userId,
                           style: TextStyle(fontWeight: FontWeight.bold)),
                       SizedBox(height: 12.0),
-                      emailLabel,
+                      Text(S.of(context).email + ": "),
                       Text(email,
                           style: TextStyle(fontWeight: FontWeight.bold)),
                       SizedBox(height: 12.0),
-                      firstNameLabel,
+                      Text(S.of(context).first_name + ": "),
                       Text(firstName,
                           style: TextStyle(fontWeight: FontWeight.bold)),
                       SizedBox(height: 12.0),
-                      lastNameLabel,
+                      Text(S.of(context).last_name + ": "),
                       Text(lastName,
                           style: TextStyle(fontWeight: FontWeight.bold)),
                       SizedBox(height: 12.0),
-                      settingsIdLabel,
+                      Text(S.of(context).setttings_id),
                       Text(settingsId,
                           style: TextStyle(fontWeight: FontWeight.bold)),
                       SizedBox(height: 12.0),
