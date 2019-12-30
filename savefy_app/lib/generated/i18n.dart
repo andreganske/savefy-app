@@ -22,7 +22,7 @@ class S implements WidgetsLocalizations {
   TextDirection get textDirection => TextDirection.ltr;
 
   String get app_id_ => "app id";
-  String get app_title => "Savefy App";
+  String get app_title => "SAVEFY app";
   String get check_your_email_and_follow_the_instructions_to_reset_your => "Check your email and follow the instructions to reset your password.";
   String get create_an_account => "create an account";
   String get email => "email";
