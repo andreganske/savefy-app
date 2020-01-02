@@ -27,5 +27,8 @@
   "sign_up_error": "sign up error",
   "sign_up_error_e": "sign up error: $e",
   "forgot_password_error": "Forgot Password Error",
-  "forgot_password_error_e": "Forgot Password Error: $e"
+  "forgot_password_error_e": "Forgot Password Error: $e",
+
+  "success": "success",
+  "user_profile_updated": "your user information was updated successfully"
 }

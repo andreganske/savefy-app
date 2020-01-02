@@ -65,6 +65,7 @@ class AppDrawer extends StatelessWidget {
 
   _signOut(BuildContext context) async {
     StateWidget.of(context).logOutUser();
+    await Navigator.pushNamed(context, Routes.signin);
   }
 
 }

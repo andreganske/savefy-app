@@ -1,9 +1,13 @@
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:savefy_app/generated/i18n.dart';
 import 'package:savefy_app/models/state.dart';
+import 'package:savefy_app/models/user.dart';
 import 'package:savefy_app/ui/screens/sign_in.dart';
 import 'package:savefy_app/ui/widgets/drawer.dart';
 import 'package:savefy_app/ui/widgets/loading.dart';
+import 'package:savefy_app/util/routes.dart';
 import 'package:savefy_app/util/state_widget.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -14,9 +18,88 @@ class _ProfileScreenState extends State<ProfileScreen> {
   StateModel appState;
   bool _loadingVisible = false;
 
+  final _email = TextEditingController();
+  final _firstName = TextEditingController();
+  final _lastName = TextEditingController();
+  final _password = TextEditingController();
+
   @override
   void initState() {
     super.initState();
+  }
+
+  Future<void> _changeLoadingVisible() async {
+    setState(() {
+      _loadingVisible = !_loadingVisible;
+    });
+  }
+
+  Widget _buildScaffold() {
+    return Scaffold(
+        backgroundColor: Colors.white,
+        drawer: AppDrawer(),
+        appBar: new AppBar(
+            title: new Text(S.of(context).profile)
+        ),
+        body: LoadingScreen(
+            child: _buildForm(),
+            inAsyncCall: _loadingVisible,
+        ));
+  }
+
+  Widget _buildForm() {
+    return Form(
+        child: ListView(
+          children: <Widget>[
+            _buildListTile(S.of(context).first_name, _firstName),
+            _buildListTile(S.of(context).last_name, _lastName),
+            _buildListTile(S.of(context).email, _email),
+            _buildListTile(S.of(context).password, _password),
+            _updateUserDataButton(),
+            _signOutLabel(),
+          ],
+        ),
+    );
+  }
+
+  Widget _buildListTile (String leading, TextEditingController controller) {
+    return  ListTile(
+      leading: Container(
+          child: Text(leading.toUpperCase(),
+            style: TextStyle(fontWeight: FontWeight.w300)),
+          width: 80.0,
+      ),
+      title: TextFormField(
+        controller: controller,
+      ),
+    );
+  }
+
+  Widget _updateUserDataButton() {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 24.0, horizontal: 16.0),
+      child: RaisedButton(
+        onPressed: () {
+          _updateUserData();
+        },
+        color: Theme.of(context).primaryColor,
+        child: Text(S.of(context).update_user_info.toUpperCase(),
+            style: TextStyle(color: Colors.white)),
+      ),
+    );
+  }
+
+  Widget _signOutLabel(){
+    return FlatButton(
+      child: Text(
+        S.of(context).sign_out.toUpperCase(),
+        style: TextStyle(color: Colors.black54),
+      ),
+      onPressed:() async {
+        StateWidget.of(context).logOutUser();
+        await Navigator.pushNamed(context, Routes.signin);
+      },
+    );
   }
 
   Widget build(BuildContext context) {
@@ -35,92 +118,48 @@ class _ProfileScreenState extends State<ProfileScreen> {
         _loadingVisible = false;
       }
 
-      final userId = appState?.firebaseUserAuth?.uid ?? '';
-      final email = appState?.firebaseUserAuth?.email ?? '';
-      final firstName = appState?.user?.firstName ?? '';
-      final lastName = appState?.user?.lastName ?? '';
-      final settingsId = appState?.settings?.settingsId ?? '';
+      _email.text = appState?.firebaseUserAuth?.email ?? '';
+      _firstName.text = appState?.user?.firstName ?? '';
+      _lastName.text = appState?.user?.lastName ?? '';
+      _password.text = "*********";
 
-      return Scaffold(
-        backgroundColor: Colors.white,
-        drawer: AppDrawer(),
-        appBar: new AppBar(
-            title: new Text(S.of(context).profile)
-        ),
-        body: LoadingScreen(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 48.0),
-              child: Center(
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      SizedBox(height: 48.0),
-                    Text(S.of(context).app_id_),
-                      Text(userId,
-                          style: TextStyle(fontWeight: FontWeight.bold)),
-                      SizedBox(height: 12.0),
-                    Text(S.of(context).email),
-                      Text(email,
-                          style: TextStyle(fontWeight: FontWeight.bold)),
-                      SizedBox(height: 12.0),
-                      Text(S.of(context).first_name),
-                      Text(firstName,
-                          style: TextStyle(fontWeight: FontWeight.bold)),
-                      SizedBox(height: 12.0),
-                      Text(S.of(context).last_name),
-                      Text(lastName,
-                          style: TextStyle(fontWeight: FontWeight.bold)),
-                      SizedBox(height: 12.0),
-                      Text(S.of(context).setttings_id),
-                      Text(settingsId,
-                          style: TextStyle(fontWeight: FontWeight.bold)),
-                      SizedBox(height: 12.0),
-                      _updateUserDataButton(),
-                      _signOutLabel(),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            inAsyncCall: _loadingVisible),
-      );
+      return _buildScaffold();
     }
   }
 
-  _updateUserDataButton() {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 16.0),
-      child: RaisedButton(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(24),
-        ),
-        onPressed: () {
-          _updateUserData();
-        },
-        padding: EdgeInsets.all(12),
-        color: Theme.of(context).primaryColor,
-        child: Text(S.of(context).update_user_info, style: TextStyle(color: Colors.white)),
-      ),
-    );
+  _updateUserData() async {
+    User user = new User.fromJson({
+      "userId": appState.firebaseUserAuth.uid,
+      "firstName": _firstName.text.trim(),
+      "lastName": _lastName.text.trim(),
+      "email":  _email.text.trim(),
+    });
 
+    try {
+      _changeLoadingVisible();
+      await StateWidget.of(context).updateUser(user);
+      appState = StateWidget.of(context).state;
+      _showSuccessDialog();
+
+    } catch (e) {
+      _changeLoadingVisible();
+      print(S.of(context).sign_in_error_e(e.toString()));
+      Flushbar(
+        title: S.of(context).sign_in_error,
+        message: e.toString(),
+        duration: Duration(seconds: 10),
+      )..show(context);
+    }
   }
 
-  _signOutLabel() {
-    return FlatButton(
-      child: Text(
-        S.of(context).sign_out,
-        style: TextStyle(color: Colors.black54),
-      ),
-      onPressed: () {
-        StateWidget.of(context).logOutUser();
-      },
-    );
-  }
-
-  _updateUserData() {
-
+  _showSuccessDialog() {
+    _changeLoadingVisible();
+    Flushbar(
+      title: S.of(context).success.toUpperCase(),
+      message: S.of(context).user_profile_updated,
+      duration: Duration(seconds: 5),
+      backgroundColor: Colors.lightGreen,
+    )..show(context);
   }
 
 }

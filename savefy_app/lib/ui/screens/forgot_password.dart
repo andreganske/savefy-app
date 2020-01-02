@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:savefy_app/generated/i18n.dart';
 import 'package:savefy_app/ui/widgets/loading.dart';
 import 'package:savefy_app/util/auth.dart';
+import 'package:savefy_app/util/routes.dart';
 import 'package:savefy_app/util/validator.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
@@ -77,7 +78,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         style: TextStyle(color: Colors.black54),
       ),
       onPressed: () {
-        Navigator.pushNamed(context, '/signin');
+        Navigator.pushNamed(context, Routes.signin);
       },
     );
 
