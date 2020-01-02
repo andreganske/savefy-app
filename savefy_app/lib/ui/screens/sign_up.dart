@@ -217,7 +217,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         await Navigator.pushNamed(context, '/signin');
       } catch (e) {
         _changeLoadingVisible();
-        print(S.of(context).sign_up_error_e);
+        print(S.of(context).sign_up_error_e(e.toString()));
         String exception = Auth.getExceptionText(e);
         Flushbar(
           title: S.of(context).sign_up_error,
