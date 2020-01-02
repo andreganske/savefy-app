@@ -66,7 +66,7 @@ class Auth {
     _firestore.document("users/${user.userId}").updateData(user.toJson());
   }
 
-  static void addUserSettingsDB(User user) async {
+  static Future<void> addUserSettingsDB(User user) async {
     checkUserExist(user.userId).then((value) {
       if (!value) {
         print("user ${user.firstName} ${user.email} added");

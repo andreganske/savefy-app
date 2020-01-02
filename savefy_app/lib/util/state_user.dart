@@ -47,9 +47,11 @@ class UserState {
 
   static Future<StateModel> updateUser(User user) async {
     print('...updateUser...');
-    Auth.storeUserLocal(user).then((userId) {
-      Auth.addUserSettingsDB(user);
-    });
+    await Auth.addUserSettingsDB(user);
+    User result = await Auth.getUserFirestore(user.userId);
+    await Auth.storeUserLocal(result);
+    Settings settings = await Auth.getSettingsFirestore(result.userId);
+    await Auth.storeSettingsLocal(settings);
     return initUser();
   }
 }

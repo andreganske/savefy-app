@@ -41,7 +41,9 @@ class S implements WidgetsLocalizations {
   String get sign_out => "sign out";
   String get sign_up => "sign up";
   String get sign_up_error => "sign up error";
+  String get success => "success";
   String get update_user_info => "save my info";
+  String get user_profile_updated => "your user information was updated successfully";
   String forgot_password_error_e(String e) => "Forgot Password Error: $e";
   String sign_in_error_e(String e) => "sign in error: $e";
   String sign_up_error_e(String e) => "sign up error: $e";

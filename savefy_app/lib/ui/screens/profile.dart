@@ -1,3 +1,4 @@
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:savefy_app/generated/i18n.dart';
 import 'package:savefy_app/models/state.dart';
@@ -125,7 +126,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
       "lastName": _lastName.text.trim(),
       "email":  _email.text.trim(),
     });
-    UserState.updateUser(user);
+    UserState.updateUser(user).then((state) {
+      StateWidget.of(context).state = state;
+      _showSuccessDialog();
+    });
+  }
+
+  _showSuccessDialog() {
+    Flushbar(
+      title: S.of(context).success.toUpperCase(),
+      message: S.of(context).user_profile_updated,
+      duration: Duration(seconds: 5),
+      backgroundColor: Colors.lightGreen,
+    )..show(context);
   }
 
 }
