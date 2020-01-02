@@ -38,10 +38,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
           radius: 60.0,
           child: ClipOval(
             child: Image.asset(
-              'assets/images/default.png',
-              fit: BoxFit.cover,
-              width: 120.0,
-              height: 120.0,
+              'assets/savefy-logo.png',
+              fit: BoxFit.cover
             ),
           )),
     );
@@ -61,7 +59,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ), // icon is 48px widget.
         hintText: S.of(context).first_name,
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
     );
 
@@ -80,7 +77,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ), // icon is 48px widget.
         hintText: S.of(context).last_name,
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
     );
 
@@ -99,7 +95,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ), // icon is 48px widget.
         hintText: S.of(context).email,
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
     );
 
@@ -118,16 +113,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ), // icon is 48px widget.
         hintText: S.of(context).password,
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
     );
 
     final signUpButton = Padding(
       padding: EdgeInsets.symmetric(vertical: 16.0),
       child: RaisedButton(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(24),
-        ),
         onPressed: () {
           _emailSignUp(
               firstName: _firstName.text,
