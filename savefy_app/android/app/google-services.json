@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "893477237061",
+    "firebase_url": "https://new-savefy-app.firebaseio.com",
+    "project_id": "new-savefy-app",
+    "storage_bucket": "new-savefy-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:893477237061:android:e1103a88b237ea4db20e2c",
+        "android_client_info": {
+          "package_name": "br.app.savefy_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "893477237061-vbeufkqi9s56iucd4pj5levb1o57uign.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.app.savefy_app",
+            "certificate_hash": "b648ffaf1babf64c2cdd710421455af19e167de9"
+          }
+        },
+        {
+          "client_id": "893477237061-7isarnc0u42vgk0qkoqo0npcevocdgpf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1olBrryvqRk9Hl1i3ihZZsFM5ZhTrqsg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "893477237061-7isarnc0u42vgk0qkoqo0npcevocdgpf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
