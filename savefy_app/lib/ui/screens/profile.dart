@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:savefy_app/generated/i18n.dart';
 import 'package:savefy_app/models/state.dart';
+import 'package:savefy_app/models/user.dart';
 import 'package:savefy_app/ui/screens/sign_in.dart';
 import 'package:savefy_app/ui/widgets/drawer.dart';
 import 'package:savefy_app/ui/widgets/loading.dart';
+import 'package:savefy_app/util/state_user.dart';
 import 'package:savefy_app/util/state_widget.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -117,7 +119,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   _updateUserData() {
-
+    User user = new User.fromJson({
+      "userId": appState.firebaseUserAuth.uid,
+      "firstName": _firstName.text,
+      "lastName": _lastName.text,
+      "email":  _email.text,
+    });
+    UserState.updateUser(user);
   }
 
 }

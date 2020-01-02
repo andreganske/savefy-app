@@ -1,12 +1,10 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:savefy_app/models/settings.dart';
-import 'package:savefy_app/models/state.dart';
-import 'package:savefy_app/models/user.dart';
 
-import 'auth.dart';
+import 'package:savefy_app/models/state.dart';
+
+import 'state_user.dart';
 
 
 class StateWidget extends StatefulWidget {
@@ -47,35 +45,38 @@ class _StateWidgetState extends State<StateWidget> {
   }
 
   Future<Null> initUser() async {
-    //print('...initUser...');
-    FirebaseUser firebaseUserAuth = await Auth.getCurrentFirebaseUser();
-    User user = await Auth.getUserLocal();
-    Settings settings = await Auth.getSettingsLocal();
-    setState(() {
-      state.isLoading = false;
-      state.firebaseUserAuth = firebaseUserAuth;
-      state.user = user;
-      state.settings = settings;
+    UserState.initUser().then((userState) {
+      setState(() {
+        state.isLoading = false;
+        state.firebaseUserAuth = userState.firebaseUserAuth;
+        state.user = userState.user;
+        state.settings = userState.settings;
+      });
     });
   }
 
+
   Future<void> logOutUser() async {
-    await Auth.signOut();
-    FirebaseUser firebaseUserAuth = await Auth.getCurrentFirebaseUser();
-    setState(() {
-      state.user = null;
-      state.settings = null;
-      state.firebaseUserAuth = firebaseUserAuth;
+    UserState.logOutUser().then((userState) {
+      setState(() {
+        state.isLoading = false;
+        state.firebaseUserAuth = userState.firebaseUserAuth;
+        state.user = userState.user;
+        state.settings = userState.settings;
+      });
     });
+
   }
 
   Future<void> logInUser(email, password) async {
-    String userId = await Auth.signIn(email, password);
-    User user = await Auth.getUserFirestore(userId);
-    await Auth.storeUserLocal(user);
-    Settings settings = await Auth.getSettingsFirestore(userId);
-    await Auth.storeSettingsLocal(settings);
-    await initUser();
+    UserState.logInUser(email, password).then((userState) {
+      setState(() {
+        state.isLoading = false;
+        state.firebaseUserAuth = userState.firebaseUserAuth;
+        state.user = userState.user;
+        state.settings = userState.settings;
+      });
+    });
   }
 
   @override

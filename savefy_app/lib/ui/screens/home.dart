@@ -12,7 +12,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
 
   StateModel appState;
-  bool _loadingVisible = false;
+  bool loadingVisible = false;
 
   @override
   void initState() {
@@ -30,9 +30,9 @@ class _HomeScreenState extends State<HomeScreen> {
       return SignInScreen();
     } else {
       if (appState.isLoading) {
-        _loadingVisible = true;
+        loadingVisible = true;
       } else {
-        _loadingVisible = false;
+        loadingVisible = false;
       }
 
       return Scaffold(
