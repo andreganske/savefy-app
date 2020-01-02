@@ -55,7 +55,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget _buildListTile (String leading, TextEditingController controller) {
     return  ListTile(
       leading: Container(
-          child: Text(leading),
+          child: Text(leading.toUpperCase(),
+            style: TextStyle(fontWeight: FontWeight.w300)),
           width: 80.0,
       ),
       title: TextFormField(
@@ -68,15 +69,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 24.0, horizontal: 16.0),
       child: RaisedButton(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(24),
-        ),
         onPressed: () {
           _updateUserData();
         },
-        padding: EdgeInsets.all(12),
         color: Theme.of(context).primaryColor,
-        child: Text(S.of(context).update_user_info, style: TextStyle(color: Colors.white)),
+        child: Text(S.of(context).update_user_info.toUpperCase(),
+            style: TextStyle(color: Colors.white)),
       ),
     );
   }
@@ -84,7 +82,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget _signOutLabel() {
     return FlatButton(
       child: Text(
-        S.of(context).sign_out,
+        S.of(context).sign_out.toUpperCase(),
         style: TextStyle(color: Colors.black54),
       ),
       onPressed: () {
