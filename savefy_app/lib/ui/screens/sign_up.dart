@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:savefy_app/generated/i18n.dart';
 import 'package:savefy_app/ui/widgets/loading.dart';
 import 'package:savefy_app/util/auth.dart';
+import 'package:savefy_app/util/routes.dart';
 import 'package:savefy_app/util/state_widget.dart';
 import 'package:savefy_app/util/validator.dart';
 
@@ -147,7 +148,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         style: TextStyle(color: Colors.black54),
       ),
       onPressed: () {
-        Navigator.pushNamed(context, '/signin');
+        Navigator.pushNamed(context, Routes.signin);
       },
     );
 
@@ -204,7 +205,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         SystemChannels.textInput.invokeMethod('TextInput.hide');
         await _changeLoadingVisible();
         await StateWidget.of(context).signUpUser(email, password, firstName, lastName);
-        await Navigator.pushNamed(context, '/signin');
+        await Navigator.pushNamed(context, Routes.home);
       } catch (e) {
         _changeLoadingVisible();
         print(S.of(context).sign_up_error_e(e.toString()));

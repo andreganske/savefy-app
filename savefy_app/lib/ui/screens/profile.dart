@@ -1,12 +1,13 @@
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:savefy_app/generated/i18n.dart';
 import 'package:savefy_app/models/state.dart';
 import 'package:savefy_app/models/user.dart';
 import 'package:savefy_app/ui/screens/sign_in.dart';
 import 'package:savefy_app/ui/widgets/drawer.dart';
 import 'package:savefy_app/ui/widgets/loading.dart';
-import 'package:savefy_app/util/state_user.dart';
+import 'package:savefy_app/util/routes.dart';
 import 'package:savefy_app/util/state_widget.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -25,6 +26,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
+  }
+
+  Future<void> _changeLoadingVisible() async {
+    setState(() {
+      _loadingVisible = !_loadingVisible;
+    });
   }
 
   Widget _buildScaffold() {
@@ -82,14 +89,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _signOutLabel() {
+  Widget _signOutLabel(){
     return FlatButton(
       child: Text(
         S.of(context).sign_out.toUpperCase(),
         style: TextStyle(color: Colors.black54),
       ),
-      onPressed: () {
+      onPressed:() async {
         StateWidget.of(context).logOutUser();
+        await Navigator.pushNamed(context, Routes.signin);
       },
     );
   }
@@ -119,20 +127,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
-  _updateUserData() {
+  _updateUserData() async {
     User user = new User.fromJson({
       "userId": appState.firebaseUserAuth.uid,
       "firstName": _firstName.text.trim(),
       "lastName": _lastName.text.trim(),
       "email":  _email.text.trim(),
     });
-    UserState.updateUser(user).then((state) {
-      StateWidget.of(context).state = state;
+
+    try {
+      _changeLoadingVisible();
+      await StateWidget.of(context).updateUser(user);
+      appState = StateWidget.of(context).state;
       _showSuccessDialog();
-    });
+
+    } catch (e) {
+      _changeLoadingVisible();
+      print(S.of(context).sign_in_error_e(e.toString()));
+      Flushbar(
+        title: S.of(context).sign_in_error,
+        message: e.toString(),
+        duration: Duration(seconds: 10),
+      )..show(context);
+    }
   }
 
   _showSuccessDialog() {
+    _changeLoadingVisible();
     Flushbar(
       title: S.of(context).success.toUpperCase(),
       message: S.of(context).user_profile_updated,

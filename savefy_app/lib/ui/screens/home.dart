@@ -41,6 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
               title: new Text(S.of(context).home)
           ),
           body: new Container (
+            child: Text("Olá " + appState.user.firstName + " " + appState.user.lastName),
           )
       );
     }

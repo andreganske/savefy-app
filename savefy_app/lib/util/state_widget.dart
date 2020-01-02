@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:savefy_app/models/state.dart';
+import 'package:savefy_app/models/user.dart';
 
 import 'state_user.dart';
 
@@ -54,6 +55,10 @@ class _StateWidgetState extends State<StateWidget> {
 
   Future<void> signUpUser(email, password, firstName, lastName) async {
     state = await UserState.signUpUser(email, password, firstName, lastName);
+  }
+
+  Future<void> updateUser(User user) async {
+    state = await UserState.updateUser(user);
   }
 
   @override

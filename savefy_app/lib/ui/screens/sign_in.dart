@@ -5,6 +5,7 @@ import 'package:savefy_app/generated/i18n.dart';
 
 import 'package:savefy_app/ui/widgets/loading.dart';
 import 'package:savefy_app/util/auth.dart';
+import 'package:savefy_app/util/routes.dart';
 import 'package:savefy_app/util/state_widget.dart';
 import 'package:savefy_app/util/validator.dart';
 
@@ -102,7 +103,7 @@ class _SignInScreenState extends State<SignInScreen> {
         style: TextStyle(color: Colors.black54),
       ),
       onPressed: () {
-        Navigator.pushNamed(context, '/forgot-password');
+        Navigator.pushNamed(context, Routes.forgotpassword);
       },
     );
 
@@ -112,7 +113,7 @@ class _SignInScreenState extends State<SignInScreen> {
         style: TextStyle(color: Colors.black54),
       ),
       onPressed: () {
-        Navigator.pushNamed(context, '/signup');
+        Navigator.pushNamed(context, Routes.signup);
       },
     );
 
@@ -160,10 +161,9 @@ class _SignInScreenState extends State<SignInScreen> {
     if (_formKey.currentState.validate()) {
       try {
         SystemChannels.textInput.invokeMethod('TextInput.hide');
-        await _changeLoadingVisible();
-        //need await so it has chance to go through error if found.
+        _changeLoadingVisible();
         await StateWidget.of(context).logInUser(email, password);
-        await Navigator.pushNamed(context, '/');
+        await Navigator.pushNamed(context, Routes.home);
       } catch (e) {
         _changeLoadingVisible();
         print(S.of(context).sign_in_error_e(e.toString()));
