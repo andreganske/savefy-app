@@ -21,9 +21,13 @@ class S implements WidgetsLocalizations {
   @override
   TextDirection get textDirection => TextDirection.ltr;
 
+  String get add_expense => "add expense";
+  String get amount => "amount";
   String get app_id_ => "app id";
   String get app_title => "SAVEFY app";
+  String get cancel => "cancel";
   String get check_your_email_and_follow_the_instructions_to_reset_your => "Check your email and follow the instructions to reset your password.";
+  String get close => "close";
   String get create_an_account => "create an account";
   String get email => "email";
   String get first_name => "first name";
@@ -35,6 +39,7 @@ class S implements WidgetsLocalizations {
   String get password => "password";
   String get password_reset_email_sent => "password reset email sent";
   String get profile => "profile";
+  String get save => "save";
   String get setttings_id => "settings id";
   String get sign_in => "sign in";
   String get sign_in_error => "sign in error";

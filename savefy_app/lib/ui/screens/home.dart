@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:savefy_app/generated/i18n.dart';
 import 'package:savefy_app/models/state.dart';
 import 'package:savefy_app/ui/screens/sign_in.dart';
 import 'package:savefy_app/ui/widgets/drawer.dart';
+import 'package:savefy_app/ui/widgets/loading.dart';
 import 'package:savefy_app/util/state_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -12,17 +14,52 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
 
   StateModel appState;
-  bool loadingVisible = false;
+  bool _loadingVisible = false;
 
   @override
   void initState() {
     super.initState();
   }
 
+  Future<void> _changeLoadingVisible() async {
+    setState(() {
+      _loadingVisible = !_loadingVisible;
+    });
+  }
+
+  Widget _buildScaffold() {
+    return Scaffold(
+        backgroundColor: Colors.white,
+        drawer: AppDrawer(),
+        appBar: new AppBar(
+            title: new Text(S.of(context).home)
+        ),
+        body: LoadingScreen(
+          child: _createMainView(),
+          inAsyncCall: _loadingVisible,
+        ),
+        floatingActionButton: _createButton()
+    );
+  }
+
+  Widget _createButton() {
+    return FloatingActionButton(
+      onPressed: () {
+        _addExpenseDialog(context);
+      },
+      child: Icon(Icons.add),
+      backgroundColor: Colors.green,
+    );
+  }
+
+  Widget _createMainView() {
+    return Container(
+      child: Text("Olá " + appState.user.firstName + " " + appState.user.lastName),
+    );
+  }
+
   Widget build(BuildContext context) {
-
     appState = StateWidget.of(context).state;
-
     if (!appState.isLoading &&
         (appState.firebaseUserAuth == null ||
             appState.user == null ||
@@ -30,20 +67,53 @@ class _HomeScreenState extends State<HomeScreen> {
       return SignInScreen();
     } else {
       if (appState.isLoading) {
-        loadingVisible = true;
+        _loadingVisible = true;
       } else {
-        loadingVisible = false;
+        _loadingVisible = false;
       }
-
-      return Scaffold(
-          drawer: AppDrawer(),
-          appBar: new AppBar(
-              title: new Text(S.of(context).home)
-          ),
-          body: new Container (
-            child: Text("Olá " + appState.user.firstName + " " + appState.user.lastName),
-          )
-      );
+      return _buildScaffold();
     }
   }
+
+  _addExpenseDialog(BuildContext context) {
+    return showDialog<String> (
+        context: context,
+        builder: (BuildContext context) {
+
+          var controller = new MoneyMaskedTextController();
+
+          return AlertDialog(
+            title: Text(S.of(context).add_expense.toUpperCase()),
+            content: new Row(
+              children: <Widget>[
+                new Expanded(
+                    child: new TextField(
+                      autofocus: true,
+                      controller: controller,
+                      keyboardType: TextInputType.number,
+                      onChanged: (value) { },
+                    ))
+              ],
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text(S.of(context).cancel.toUpperCase()),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              FlatButton(
+                child: Text(S.of(context).save.toUpperCase(),
+                    style: TextStyle(color: Colors.white)),
+                color: Theme.of(context).primaryColor,
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        }
+    );
+  }
+
 }
