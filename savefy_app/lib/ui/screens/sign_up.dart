@@ -3,9 +3,9 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter/services.dart';
 
 import 'package:savefy_app/generated/i18n.dart';
-import 'package:savefy_app/models/user.dart';
 import 'package:savefy_app/ui/widgets/loading.dart';
 import 'package:savefy_app/util/auth.dart';
+import 'package:savefy_app/util/state_widget.dart';
 import 'package:savefy_app/util/validator.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -203,17 +203,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       try {
         SystemChannels.textInput.invokeMethod('TextInput.hide');
         await _changeLoadingVisible();
-        //need await so it has chance to go through error if found.
-        await Auth.signUp(email, password).then((uID) {
-          Auth.addUserSettingsDB(new User(
-            userId: uID,
-            email: email,
-            firstName: firstName,
-            lastName: lastName,
-          ));
-        });
-        //now automatically login user too
-        //await StateWidget.of(context).logInUser(email, password);
+        await StateWidget.of(context).signUpUser(email, password, firstName, lastName);
         await Navigator.pushNamed(context, '/signin');
       } catch (e) {
         _changeLoadingVisible();

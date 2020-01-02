@@ -43,9 +43,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Form(
         child: ListView(
           children: <Widget>[
-            _buildListTile(S.of(context).email, _email),
             _buildListTile(S.of(context).first_name, _firstName),
             _buildListTile(S.of(context).last_name, _lastName),
+            _buildListTile(S.of(context).email, _email),
             _buildListTile(S.of(context).password, _password),
             _updateUserDataButton(),
             _signOutLabel(),
@@ -121,9 +121,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   _updateUserData() {
     User user = new User.fromJson({
       "userId": appState.firebaseUserAuth.uid,
-      "firstName": _firstName.text,
-      "lastName": _lastName.text,
-      "email":  _email.text,
+      "firstName": _firstName.text.trim(),
+      "lastName": _lastName.text.trim(),
+      "email":  _email.text.trim(),
     });
     UserState.updateUser(user);
   }

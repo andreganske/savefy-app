@@ -1,8 +1,10 @@
 import 'dart:async';
-//import 'dart:convert';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
+
+
 import 'package:savefy_app/models/settings.dart';
 import 'package:savefy_app/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,24 +13,69 @@ enum authProblems { UserNotFound, PasswordNotValid, NetworkError, UnknownError }
 
 class Auth {
 
+  static FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  static Firestore _firestore = Firestore.instance;
+
+  /* FIREBASE STORAGE */
   static Future<String> signUp(String email, String password) async {
-    AuthResult result = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+    AuthResult result = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email, password: password);
     return result.user.uid;
+  }
+
+  static Future<void> signOut() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
+    _firebaseAuth.signOut();
+  }
+
+  static Future<void> forgotPasswordEmail(String email) async {
+    await _firebaseAuth.sendPasswordResetEmail(email: email);
+  }
+
+  static Future<String> signIn(String email, String password) async {
+    AuthResult result = (await _firebaseAuth
+        .signInWithEmailAndPassword(email: email, password: password));
+    return result.user.uid;
+  }
+
+  static Future<FirebaseUser> getCurrentFirebaseUser() async {
+    return await _firebaseAuth.currentUser();
+  }
+
+  static Future<void> updateFirebaseUser(User user) async {
+    _firebaseAuth.currentUser().then((firebaseUser) {
+      firebaseUser.updateEmail(user.email);
+    });
+  }
+
+  /* FIRESTONE STORAGE */
+  static void _addSettings(Settings settings) async {
+    _firestore.document("settings/${settings.settingsId}").setData(settings.toJson());
+  }
+
+  static void _addUsers(User user) async {
+    _firestore.document("users/${user.userId}").setData(user.toJson());
+  }
+
+  static void _updateSettings(Settings settings) async {
+    _firestore.document("settings/${settings.settingsId}").updateData(settings.toJson());
+  }
+
+  static void _updateUsers(User user) async {
+    _firestore.document("users/${user.userId}").updateData(user.toJson());
   }
 
   static void addUserSettingsDB(User user) async {
     checkUserExist(user.userId).then((value) {
       if (!value) {
         print("user ${user.firstName} ${user.email} added");
-        Firestore.instance
-            .document("users/${user.userId}")
-            .setData(user.toJson());
-        _addSettings(new Settings(
-          settingsId: user.userId,
-        ));
+        _addUsers(user);
+        _addSettings(new Settings(settingsId: user.userId));
       } else {
         print("user ${user.firstName} ${user.email} exists");
+        _updateSettings(new Settings(settingsId: user.userId));
+        _updateUsers(user);
       }
     });
   }
@@ -36,7 +83,7 @@ class Auth {
   static Future<bool> checkUserExist(String userId) async {
     bool exists = false;
     try {
-      await Firestore.instance.document("users/$userId").get().then((doc) {
+      await _firestore.document("users/$userId").get().then((doc) {
         if (doc.exists)
           exists = true;
         else
@@ -48,44 +95,25 @@ class Auth {
     }
   }
 
-  static void _addSettings(Settings settings) async {
-    Firestore.instance
-        .document("settings/${settings.settingsId}")
-        .setData(settings.toJson());
-  }
-
-  static Future<String> signIn(String email, String password) async {
-    AuthResult result = (await FirebaseAuth.instance
-        .signInWithEmailAndPassword(email: email, password: password));
-    return result.user.uid;
-  }
-
-  static Future<User> getUserFirestore(String userId) async {
-    if (userId != null) {
-      return Firestore.instance
-          .collection('users')
-          .document(userId)
-          .get()
-          .then((documentSnapshot) => User.fromDocument(documentSnapshot));
-    } else {
-      print('firestore userId can not be null');
-      return null;
-    }
-  }
-
   static Future<Settings> getSettingsFirestore(String settingsId) async {
     if (settingsId != null) {
-      return Firestore.instance
-          .collection('settings')
-          .document(settingsId)
-          .get()
-          .then((documentSnapshot) => Settings.fromDocument(documentSnapshot));
+      return _firestore.collection('settings').document(settingsId).get().then((documentSnapshot) => Settings.fromDocument(documentSnapshot));
     } else {
       print('no firestore settings available');
       return null;
     }
   }
 
+  static Future<User> getUserFirestore(String userId) async {
+    if (userId != null) {
+      return _firestore.collection('users').document(userId).get().then((documentSnapshot) => User.fromDocument(documentSnapshot));
+    } else {
+      print('firestore userId can not be null');
+      return null;
+    }
+  }
+
+  /* LOCAL STORAGE */
   static Future<String> storeUserLocal(User user) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String storeUser = userToJson(user);
@@ -100,16 +128,10 @@ class Auth {
     return settings.settingsId;
   }
 
-  static Future<FirebaseUser> getCurrentFirebaseUser() async {
-    FirebaseUser currentUser = await FirebaseAuth.instance.currentUser();
-    return currentUser;
-  }
-
   static Future<User> getUserLocal() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (prefs.getString('user') != null) {
       User user = userFromJson(prefs.getString('user'));
-      //print('USER: $user');
       return user;
     } else {
       return null;
@@ -125,16 +147,6 @@ class Auth {
     } else {
       return null;
     }
-  }
-
-  static Future<void> signOut() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.clear();
-    FirebaseAuth.instance.signOut();
-  }
-
-  static Future<void> forgotPasswordEmail(String email) async {
-    await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
   }
 
   static String getExceptionText(Exception e) {

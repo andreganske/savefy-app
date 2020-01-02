@@ -13,12 +13,14 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _email = new TextEditingController();
   final TextEditingController _password = new TextEditingController();
 
   bool _autoValidate = false;
   bool _loadingVisible = false;
+
   @override
   void initState() {
     super.initState();

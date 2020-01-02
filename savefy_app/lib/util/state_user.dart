@@ -19,7 +19,7 @@ class UserState {
   static Future<StateModel> logOutUser() async {
     print('...logOutUser...');
     await Auth.signOut();
-    return StateModel.define(await Auth.getCurrentFirebaseUser(), null, null);
+    return initUser();
   }
 
   static Future<StateModel> logInUser(email, password) async {
@@ -32,8 +32,24 @@ class UserState {
     return initUser();
   }
 
+  static Future<StateModel> signUpUser(email, password, firstName, lastName) async {
+    print('...signUpUser...');
+    await Auth.signUp(email, password).then((uID) {
+      Auth.addUserSettingsDB(new User(
+        userId: uID,
+        email: email,
+        firstName: firstName,
+        lastName: lastName,
+      ));
+    });
+    return logInUser(email, password);
+  }
+
   static Future<StateModel> updateUser(User user) async {
     print('...updateUser...');
+    Auth.storeUserLocal(user).then((userId) {
+      Auth.addUserSettingsDB(user);
+    });
     return initUser();
   }
 }

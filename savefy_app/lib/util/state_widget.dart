@@ -40,43 +40,20 @@ class _StateWidgetState extends State<StateWidget> {
       state = widget.state;
     } else {
       state = new StateModel(isLoading: true);
-      initUser();
+      UserState.initUser().then((stateModel) {state = stateModel;});
     }
   }
 
-  Future<Null> initUser() async {
-    UserState.initUser().then((userState) {
-      setState(() {
-        state.isLoading = false;
-        state.firebaseUserAuth = userState.firebaseUserAuth;
-        state.user = userState.user;
-        state.settings = userState.settings;
-      });
-    });
-  }
-
-
   Future<void> logOutUser() async {
-    UserState.logOutUser().then((userState) {
-      setState(() {
-        state.isLoading = false;
-        state.firebaseUserAuth = userState.firebaseUserAuth;
-        state.user = userState.user;
-        state.settings = userState.settings;
-      });
-    });
-
+    state = await UserState.logOutUser();
   }
 
   Future<void> logInUser(email, password) async {
-    UserState.logInUser(email, password).then((userState) {
-      setState(() {
-        state.isLoading = false;
-        state.firebaseUserAuth = userState.firebaseUserAuth;
-        state.user = userState.user;
-        state.settings = userState.settings;
-      });
-    });
+    state = await UserState.logInUser(email, password);
+  }
+
+  Future<void> signUpUser(email, password, firstName, lastName) async {
+    state = await UserState.signUpUser(email, password, firstName, lastName);
   }
 
   @override
