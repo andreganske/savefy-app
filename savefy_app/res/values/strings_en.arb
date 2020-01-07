@@ -35,5 +35,7 @@
   "error_e": "the following error occurred: $e",
 
   "success": "success",
-  "user_profile_updated": "your user information was updated successfully"
+  "user_profile_updated": "your user information was updated successfully",
+
+  "account": "account"
 }

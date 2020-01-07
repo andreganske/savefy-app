@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:savefy_app/ui/screens/accountview.dart';
 import 'package:savefy_app/ui/screens/forgot_password.dart';
 import 'package:savefy_app/ui/screens/home.dart';
 import 'package:savefy_app/ui/screens/profile.dart';
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
       routes: {
         Routes.home: (context) => HomeScreen(),
         Routes.profile: (context) => ProfileScreen(),
+        Routes.account: (context) => AccountView(),
         Routes.signin: (context) => SignInScreen(),
         Routes.signup: (context) => SignUpScreen(),
         Routes.forgotpassword: (context) => ForgotPasswordScreen(),

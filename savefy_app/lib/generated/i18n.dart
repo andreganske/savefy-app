@@ -21,6 +21,7 @@ class S implements WidgetsLocalizations {
   @override
   TextDirection get textDirection => TextDirection.ltr;
 
+  String get account => "account";
   String get add_expense => "add expense";
   String get amount => "amount";
   String get app_id_ => "app id";

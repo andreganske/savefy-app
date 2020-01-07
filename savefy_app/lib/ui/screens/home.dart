@@ -22,12 +22,6 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
   }
 
-  Future<void> _changeLoadingVisible() async {
-    setState(() {
-      _loadingVisible = !_loadingVisible;
-    });
-  }
-
   Widget _buildScaffold() {
     return Scaffold(
         backgroundColor: Colors.white,

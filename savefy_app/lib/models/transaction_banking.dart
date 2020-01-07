@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:savefy_app/util/state_user.dart';
 import 'package:uuid/uuid.dart';
 
 class TransactionBanking {

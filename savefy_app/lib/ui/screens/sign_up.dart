@@ -3,8 +3,8 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter/services.dart';
 
 import 'package:savefy_app/generated/i18n.dart';
+import 'package:savefy_app/service/auth.dart';
 import 'package:savefy_app/ui/widgets/loading.dart';
-import 'file:///C:/src/savefy-app/savefy_app/lib/service/auth.dart';
 import 'package:savefy_app/util/routes.dart';
 import 'package:savefy_app/util/state_widget.dart';
 import 'package:savefy_app/util/validator.dart';

@@ -18,6 +18,11 @@ class AppDrawer extends StatelessWidget {
             onTap: () => Navigator.pushReplacementNamed(context, Routes.home),
           ),
           _createDrawerItem(
+            icon: Icons.account_balance_wallet,
+            text: S.of(context).account,
+            onTap: () => Navigator.pushReplacementNamed(context, Routes.account),
+          ),
+          _createDrawerItem(
             icon: Icons.person,
             text: S.of(context).profile,
             onTap: () => Navigator.pushReplacementNamed(context, Routes.profile),
