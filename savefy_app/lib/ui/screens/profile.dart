@@ -1,6 +1,6 @@
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+
 import 'package:savefy_app/generated/i18n.dart';
 import 'package:savefy_app/models/state.dart';
 import 'package:savefy_app/models/user.dart';

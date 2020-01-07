@@ -8,6 +8,13 @@
   "sign_in": "sign in",
   "sign_out": "sign out",
 
+  "close": "close",
+  "save": "save",
+  "cancel": "cancel",
+
+  "add_expense": "add expense",
+  "amount": "amount",
+
   "have_an_account_sign_in": "already have an account? sign in",
   "create_an_account": "create an account",
   "forgot_password": "forgot password",

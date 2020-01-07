@@ -3,7 +3,7 @@ import 'package:savefy_app/models/settings.dart';
 import 'package:savefy_app/models/state.dart';
 import 'package:savefy_app/models/user.dart';
 
-import 'auth.dart';
+import '../service/auth.dart';
 
 
 class UserState {
@@ -53,4 +53,5 @@ class UserState {
     await Auth.storeUserLocal(user);
     return initUser();
   }
+
 }
