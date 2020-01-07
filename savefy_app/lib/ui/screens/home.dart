@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:savefy_app/generated/i18n.dart';
 import 'package:savefy_app/models/state.dart';
+import 'package:savefy_app/service/expense.dart';
 import 'package:savefy_app/ui/screens/sign_in.dart';
 import 'package:savefy_app/ui/widgets/drawer.dart';
 import 'package:savefy_app/ui/widgets/loading.dart';
@@ -60,10 +61,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget build(BuildContext context) {
     appState = StateWidget.of(context).state;
-    if (!appState.isLoading &&
-        (appState.firebaseUserAuth == null ||
+    if (appState.firebaseUserAuth == null ||
             appState.user == null ||
-            appState.settings == null)) {
+            appState.settings == null) {
       return SignInScreen();
     } else {
       if (appState.isLoading) {
@@ -107,13 +107,20 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: TextStyle(color: Colors.white)),
                 color: Theme.of(context).primaryColor,
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  _newExpense(context, double.parse(controller.text.replaceAll(".", "").replaceAll(",", ".")));
                 },
               ),
             ],
           );
         }
     );
+  }
+
+  _newExpense(BuildContext context, double amount) {
+    print("amount: " + amount.toString());
+    Navigator.of(context).pop();
+
+    Expenses.createTransaction(appState.user, "1", 1, amount);
   }
 
 }

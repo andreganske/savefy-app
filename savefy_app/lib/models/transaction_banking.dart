@@ -1,51 +1,63 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:savefy_app/util/state_user.dart';
 import 'package:uuid/uuid.dart';
 
-class Transaction {
+class TransactionBanking {
 
   String transactionId = Uuid().v1().toString();
   Timestamp dateTime = Timestamp.now();
+  String userId;
   String accountId;
-  String fromUserId;
+  int type;
   double amount;
 
-  Transaction({
+  TransactionBanking({
     this.transactionId,
     this.dateTime,
+    this.userId,
     this.accountId,
-    this.fromUserId,
+    this.type,
     this.amount
   });
 
-  Transaction transactionFromJson(String str) {
+  TransactionBanking.create({
+    this.userId,
+    this.accountId,
+    this.type,
+    this.amount
+  });
+
+  TransactionBanking transactionFromJson(String str) {
     final jsonData = json.decode(str);
-    return Transaction.fromJson(jsonData);
+    return TransactionBanking.fromJson(jsonData);
   }
 
-  String transactionToJson(Transaction data) {
+  String transactionToJson(TransactionBanking data) {
     final dyn = data.toJson();
     return json.encode(dyn);
   }
 
-  factory Transaction.fromJson(Map<String, dynamic> json) => new Transaction(
+  factory TransactionBanking.fromJson(Map<String, dynamic> json) => new TransactionBanking(
       transactionId: json["transactionId"],
       dateTime: json["dateTime"],
+      userId: json["userId"],
       accountId: json["accountId"],
-      fromUserId: json["fromUserId"],
+      type: json["type"],
       amount: json["amount"]
   );
 
-  factory Transaction.fromDocument(DocumentSnapshot doc) {
-    return Transaction.fromJson(doc.data);
+  factory TransactionBanking.fromDocument(DocumentSnapshot doc) {
+    return TransactionBanking.fromJson(doc.data);
   }
 
   Map<String, dynamic> toJson() => {
     "transactionId": transactionId,
     "dateTime": dateTime,
+    "userId": userId,
     "accountId": accountId,
-    "fromUserId": fromUserId,
+    "type": type,
     "amount": amount
   };
 
