@@ -101,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: TextStyle(color: Colors.white)),
                 color: Theme.of(context).primaryColor,
                 onPressed: () {
-                  _newExpense(context, double.parse(controller.text.replaceAll(".", "").replaceAll(",", ".")));
+                  _newExpense(context, controller.numberValue);
                 },
               ),
             ],
