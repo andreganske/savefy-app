@@ -143,7 +143,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     } catch (e) {
       _changeLoadingVisible();
-      print(S.of(context).sign_in_error_e(e.toString()));
+      print(S.of(context).error_e(e.toString()));
       Flushbar(
         title: S.of(context).sign_in_error,
         message: e.toString(),
