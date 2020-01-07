@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:savefy_app/generated/i18n.dart';
 import 'package:savefy_app/models/account.dart';
 import 'package:savefy_app/models/state.dart';
@@ -31,7 +32,9 @@ class _AccountViewState extends State<AccountView> {
             title: new Text(S.of(context).account)
         ),
         body: LoadingScreen(
-          child: _buildForm(),
+          child: Container (
+            child: _buildForm(),
+          ),
           inAsyncCall: _loadingVisible,
         ));
   }
@@ -41,21 +44,35 @@ class _AccountViewState extends State<AccountView> {
         itemCount: accounts.length,
         itemBuilder: (context, index) {
 
-          return Card( //                           <-- Card widget
-            child: ExpansionTile(
-              leading: Icon(Icons.attach_money),
-              title: Text(accounts[index].name),
-              subtitle: Text(accounts[index].description),
-                children: [
-                  Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text("seu saldo é de: " + accounts[index].balance.toString()))
-                ]),
-            );
-          /*return ListTile(
-            title: Text(accounts[index].name),
-            subtitle: Text(accounts[index].description),
-          );*/
+          var controller = new MoneyMaskedTextController(precision: 2, initialValue: accounts[index].balance, leftSymbol: 'R\$ ');
+
+          return Container(
+              decoration: BoxDecoration(border: Border.fromBorderSide(BorderSide(color: Theme.of(context).dividerColor))),
+              child: ListTile(
+                contentPadding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+                leading: Container(
+                    margin: EdgeInsets.symmetric(vertical: 12.0),
+                    padding: EdgeInsets.only(right: 12.0),
+                    decoration: new BoxDecoration(
+                        border: new Border(
+                            right: new BorderSide(width: 1.0, color: Colors.black26))),
+                    child: Icon(Icons.attach_money, color: Colors.black54),
+                ),
+                title: Text(
+                  accounts[index].name,
+                  style: TextStyle(color: Colors.black45, fontWeight: FontWeight.bold),
+                ),
+                subtitle: Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(accounts[index].description, style: TextStyle(color: Colors.black54, height: 2.0)),
+                      Text(S.of(context).amount + ": " + controller.text, style: TextStyle(color: Colors.blueGrey)),
+                  ],
+                  ),
+                ),
+              ),
+          );
     });
   }
 
