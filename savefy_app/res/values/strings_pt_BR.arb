@@ -1,0 +1,39 @@
+{
+  "app_title": "SAVEFY app",
+
+  "home": "home",
+  "profile": "perfil",
+
+  "sign_up": "registrar-se",
+  "sign_in": "entrar",
+  "sign_out": "sair",
+
+  "close": "fechar",
+  "save": "salvar",
+  "cancel": "cancelar",
+
+  "add_expense": "adicionar despesa",
+  "amount": "valor",
+
+  "have_an_account_sign_in": "já tem uma conta? entrar",
+  "create_an_account": "crie uma conta",
+  "forgot_password": "esqueceu a senha",
+  "update_user_info": "salvar minhas informações",
+  "password_reset_email_sent": "e-mail de redefinição de senha enviado",
+  "check_your_email_and_follow_the_instructions_to_reset_your": "Verifique seu e-mail e siga as instruções para redefinir sua senha",
+
+  "app_id_" : "app id",
+  "email": "e-mail",
+  "password": "senha",
+  "first_name": "primeiro nome",
+  "last_name": "último nome",
+  "setttings_id": "id configurações",
+
+  "sign_in_error": "erro ao entrar",
+  "sign_up_error": "erro ao cadastrar",
+  "forgot_password_error": "erro ao recuperar a senha",
+  "error_e": "ocorreu o seguinte erro: $e",
+
+  "success": "success",
+  "user_profile_updated": "your user information was updated successfully"
+}

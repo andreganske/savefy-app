@@ -164,7 +164,7 @@ class _SignInScreenState extends State<SignInScreen> {
         await Navigator.pushNamed(context, Routes.home);
       } catch (e) {
         _changeLoadingVisible();
-        print(S.of(context).sign_in_error_e(e.toString()));
+        print(S.of(context).error_e(e.toString()));
         String exception = Auth.getExceptionText(e);
         Flushbar(
           title: S.of(context).sign_in_error,

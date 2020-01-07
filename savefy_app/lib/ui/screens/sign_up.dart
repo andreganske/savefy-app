@@ -199,7 +199,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         await Navigator.pushNamed(context, Routes.home);
       } catch (e) {
         _changeLoadingVisible();
-        print(S.of(context).sign_up_error_e(e.toString()));
+        print(S.of(context).error_e(e.toString()));
         String exception = Auth.getExceptionText(e);
         Flushbar(
           title: S.of(context).sign_up_error,

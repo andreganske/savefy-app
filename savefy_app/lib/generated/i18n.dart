@@ -49,13 +49,77 @@ class S implements WidgetsLocalizations {
   String get success => "success";
   String get update_user_info => "save my info";
   String get user_profile_updated => "your user information was updated successfully";
-  String forgot_password_error_e(String e) => "Forgot Password Error: $e";
-  String sign_in_error_e(String e) => "sign in error: $e";
-  String sign_up_error_e(String e) => "sign up error: $e";
+  String error_e(String e) => "the following error occurred: $e";
 }
 
 class $en extends S {
   const $en();
+}
+
+class $pt_BR extends S {
+  const $pt_BR();
+
+  @override
+  TextDirection get textDirection => TextDirection.ltr;
+
+  @override
+  String get cancel => "cancelar";
+  @override
+  String get save => "salvar";
+  @override
+  String get create_an_account => "crie uma conta";
+  @override
+  String get update_user_info => "salvar minhas informações";
+  @override
+  String get password => "senha";
+  @override
+  String get sign_up_error => "erro ao cadastrar";
+  @override
+  String get check_your_email_and_follow_the_instructions_to_reset_your => "Verifique seu e-mail e siga as instruções para redefinir sua senha";
+  @override
+  String get close => "fechar";
+  @override
+  String get first_name => "primeiro nome";
+  @override
+  String get email => "e-mail";
+  @override
+  String get sign_in => "entrar";
+  @override
+  String get sign_out => "sair";
+  @override
+  String get password_reset_email_sent => "e-mail de redefinição de senha enviado";
+  @override
+  String get amount => "valor";
+  @override
+  String get sign_up => "registrar-se";
+  @override
+  String get app_title => "SAVEFY app";
+  @override
+  String get profile => "perfil";
+  @override
+  String get last_name => "último nome";
+  @override
+  String get sign_in_error => "erro ao entrar";
+  @override
+  String get add_expense => "adicionar despesa";
+  @override
+  String get home => "home";
+  @override
+  String get app_id_ => "app id";
+  @override
+  String get success => "success";
+  @override
+  String get forgot_password_error => "erro ao recuperar a senha";
+  @override
+  String get setttings_id => "id configurações";
+  @override
+  String get have_an_account_sign_in => "já tem uma conta? entrar";
+  @override
+  String get forgot_password => "esqueceu a senha";
+  @override
+  String get user_profile_updated => "your user information was updated successfully";
+  @override
+  String error_e(String e) => "ocorreu o seguinte erro: $e";
 }
 
 class GeneratedLocalizationsDelegate extends LocalizationsDelegate<S> {
@@ -64,6 +128,7 @@ class GeneratedLocalizationsDelegate extends LocalizationsDelegate<S> {
   List<Locale> get supportedLocales {
     return const <Locale>[
       Locale("en", ""),
+      Locale("pt", "BR"),
     ];
   }
 
@@ -90,6 +155,9 @@ class GeneratedLocalizationsDelegate extends LocalizationsDelegate<S> {
       switch (lang) {
         case "en":
           S.current = const $en();
+          return SynchronousFuture<S>(S.current);
+        case "pt_BR":
+          S.current = const $pt_BR();
           return SynchronousFuture<S>(S.current);
         default:
           // NO-OP.

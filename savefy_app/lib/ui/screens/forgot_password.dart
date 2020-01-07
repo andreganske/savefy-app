@@ -133,7 +133,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         )..show(context);
       } catch (e) {
         _changeLoadingVisible();
-        print(S.of(context).forgot_password_error_e);
+        print(S.of(context).error_e(e.toString()));
         String exception = Auth.getExceptionText(e);
         Flushbar(
           title: S.of(context).forgot_password_error,
